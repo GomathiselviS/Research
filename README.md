@@ -18,6 +18,7 @@ add/modify in those collections and in the SaaS repos.
 | [`aws-collections-new-modules.md`](aws-collections-new-modules.md) | **Consolidated:** new modules to add (primarily `amazon.aws`) |
 | [`aws-collections-module-modifications.md`](aws-collections-module-modifications.md) | **Consolidated:** modifications to existing `amazon.aws` / `community.aws` / `amazon.cloud` modules |
 | [`ansible-saas-repos-modifications.md`](ansible-saas-repos-modifications.md) | **Consolidated:** changes to the SaaS repos to use existing modules/playbooks |
+| [`cloud-terraform-alignment-analysis.md`](cloud-terraform-alignment-analysis.md) | **Separate exercise:** `cloud.terraform` alignment for the Terraform (HCL) IaC repos + note on Go repos |
 
 ## Repos analysed (and what each document covers)
 
@@ -29,14 +30,18 @@ add/modify in those collections and in the SaaS repos.
 | [`ansible-saas-sops`](https://github.com/Ansible-SaaS/ansible-saas-sops) | Docs (Markdown) | Central SOPs / runbooks / architecture / onboarding | `ansible-saas-sops-sre-cli-to-collection-mapping.md` |
 | [`ansible-saas-sre`](https://github.com/Ansible-SaaS/ansible-saas-sre) | Ansible + Python CLI | Core SRE tooling, playbooks, plugins, `ansible-saas` CLI | `ansible-saas-sops-sre-cli-to-collection-mapping.md` |
 
-### Sibling repos referenced but out of scope for AWS-module mapping
+### Sibling repos — covered by the separate `cloud.terraform` analysis (not AWS-module mapping)
 
-| Repo | Type | Why out of scope |
+See [`cloud-terraform-alignment-analysis.md`](cloud-terraform-alignment-analysis.md).
+
+| Repo | Type | Disposition |
 |---|---|---|
-| [`model-aap-deployment`](https://github.com/Ansible-SaaS/model-aap-deployment) | Terraform (HCL) | Provisions AWS via Terraform → maps to `cloud.terraform`, not the AWS module collections |
-| [`management-aap-deployment`](https://github.com/Ansible-SaaS/management-aap-deployment) | Terraform (HCL) | Same — Terraform IaC |
-| [`model-customer-aws`](https://github.com/Ansible-SaaS/model-customer-aws) + per-instance `cus-*` / `mgt-*` | Terraform (HCL) | Generated per-deployment Terraform state |
-| [`ansible-saas-management-service`](https://github.com/Ansible-SaaS/ansible-saas-management-service) (+ other `*-service`) | Go | Service code using the AWS Go SDK, not Ansible/CLI |
+| [`model-aap-deployment`](https://github.com/Ansible-SaaS/model-aap-deployment) | Terraform (HCL) | ROSA-HCP-on-AWS stack → `cloud.terraform` (driven by the Ansible repos) |
+| [`management-aap-deployment`](https://github.com/Ansible-SaaS/management-aap-deployment) | Terraform (HCL) | Same — mgmt-plane stack |
+| [`model-customer-aws`](https://github.com/Ansible-SaaS/model-customer-aws) + per-instance `cus-*` / `mgt-*` | Terraform (HCL) | Modularized primary/secondary (Aurora Global DR); `cus-*`/`mgt-*` are generated copies |
+| [`aws-core-infra-config`](https://github.com/Ansible-SaaS/aws-core-infra-config), [`aoc-obs-iac`](https://github.com/Ansible-SaaS/aoc-obs-iac) | Terraform (HCL) | Shared runner infra / observability stack (S3 backend) |
+| `aws-management/customer/audit/identity-account-config` | **Ansible + Cloud Custodian** | **Not Terraform** — belong to the AWS-module mapping (correction of earlier label) |
+| [`ansible-saas-management-service`](https://github.com/Ansible-SaaS/ansible-saas-management-service) (+ other `*-service`) | Go | AWS Go SDK — no Ansible/Terraform alignment |
 
 ## Headline findings
 
