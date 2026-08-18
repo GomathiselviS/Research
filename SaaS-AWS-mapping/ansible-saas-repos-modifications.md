@@ -40,6 +40,26 @@ Consistency · Docs.
 | The same task logic recurs across repos — `sts_assume_role` credential setup, `get_rosa_credential`, `load_tfstate`, `save_to_repository`, `scale_up/down_deployments`, shared DNS firewall association, VPC PrivateLink endpoint setup | Extract into a **shared internal collection** (e.g. the existing `redhat.customer_lifecycle_aws`) and have `sre`, `sre-operations`, `management-lifecycle`, `customer-lifecycle-aws` import it instead of duplicating task files |
 | `secretsmanager_secret` / STS / S3 patterns are re-implemented per repo | Provide one shared role/task that emits `module_defaults` for `group/aws` (mirrors `cloud.aws_ops.aws_setup_credentials`) so all AWS tasks share one credentials contract |
 
+## Adopt existing validated content now (`cloud.aws_ops` / `cloud.aws_troubleshooting`)
+
+These roles already exist in the Red Hat validated-content collections at
+`ansible_collections/cloud/` and can be consumed by the SaaS repos today (verified present). This is
+about **reusing existing roles**, distinct from the raw-CLI→module refactors above. For content that
+does **not** exist yet, see [`saas-validated-content-to-develop.md`](saas-validated-content-to-develop.md).
+
+| Repo(s) | Adopt | Validated content | Type | Notes |
+|---|---|---|---|---|
+| `customer-lifecycle-aws`, `management-lifecycle` | Aurora global-cluster **create / delete / detach** (storage-infra part of `create_primary/secondary_instance`, MRBC) | `cloud.aws_ops.create_rds_global_cluster` (`create.yml` / `delete.yml`; delete already sets `remove_from_global_db`) | Adopt | Needs param tweaks to map exactly: parameterize cluster/instance names, allow **N replica regions**, add `storage_encrypted`/`kms_key_id`, return writer endpoint/region as facts (tracked in the develop doc) |
+| **All four** (`sre`, `sre-operations`, `management-lifecycle`, `customer-lifecycle-aws`) | Credential / assume-role setup — replaces bespoke `set_management_cloud_account` / `get_rosa_credential` glue behind ~170 `sts_assume_role` calls | `cloud.aws_ops.aws_setup_credentials` → emits `module_defaults` for `group/aws` | Adopt | Base pattern is directly usable; **chained** mgmt→customer assume-role needs an extension (tracked in the develop doc) |
+| `customer-lifecycle-aws`, `ansible-saas-sre` | Replace ad-hoc `assert`/CLI reachability checks around ALB/Route53, PrivateLink, DNS-firewall association | `cloud.aws_troubleshooting.connectivity_troubleshooter` (+ `_igw`/`_nat`/`_peering`/`_local`) and the `validate_network_acls` / `validate_route_tables` / `eval_security_groups` / `get_connection_next_hop` modules | Adopt (net-new) | Complementary capability the repos don't do rigorously today |
+| `customer-lifecycle-aws` | Post-provision / post-failover RDS reachability validation (after `create_primary_instance`, MRBC failover/restore, `sync_delete_failed_clusters`) | `cloud.aws_troubleshooting.troubleshoot_rds_connectivity` | Adopt (net-new) | Strong fit for MRBC; net-new capability, not a replacement |
+
+**Considered but NOT a fit** (documented so nobody re-litigates):
+`cloud.aws_ops.backup_create_plan` / `backup_select_resources` cover **AWS Backup**, but the repos back
+up the **AAP application** (flux/k8s) — different domain. `ec2_networking_resources`, `manage_vpc_peering`,
+`manage_transit_gateway`, `manage_ec2_instance` are low-level primitives the repos already get from
+Terraform/ROSA, not the AAP/ROSA instance lifecycle.
+
 ## Blocked-until-upstream (no repo change possible yet)
 
 These stay as `aws` CLI until the corresponding collection work lands (see the other two docs):

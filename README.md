@@ -17,7 +17,8 @@ add/modify in those collections and in the SaaS repos.
 | [`ansible-saas-sops-sre-cli-to-collection-mapping.md`](ansible-saas-sops-sre-cli-to-collection-mapping.md) | `ansible-saas-sops` (docs) + `ansible-saas-sre` mapping and summary tables |
 | [`aws-collections-new-modules.md`](aws-collections-new-modules.md) | **Consolidated:** new modules to add (primarily `amazon.aws`) |
 | [`aws-collections-module-modifications.md`](aws-collections-module-modifications.md) | **Consolidated:** modifications to existing `amazon.aws` / `community.aws` / `amazon.cloud` modules |
-| [`ansible-saas-repos-modifications.md`](ansible-saas-repos-modifications.md) | **Consolidated:** changes to the SaaS repos to use existing modules/playbooks |
+| [`ansible-saas-repos-modifications.md`](ansible-saas-repos-modifications.md) | **Consolidated:** changes to the SaaS repos to use existing modules/playbooks (incl. validated content to adopt now) |
+| [`saas-validated-content-to-develop.md`](saas-validated-content-to-develop.md) | **New validated content** to build (`cloud.aws_ops` / `redhat.customer_lifecycle_aws` roles) from recurring SaaS use cases |
 | [`cloud-terraform-alignment-analysis.md`](cloud-terraform-alignment-analysis.md) | **Separate exercise:** `cloud.terraform` alignment for the Terraform (HCL) IaC repos + note on Go repos |
 
 ## Repos analysed (and what each document covers)
