@@ -15,11 +15,18 @@ add/modify in those collections and in the SaaS repos.
 | [`management-lifecycle-cli-to-collection-mapping.md`](management-lifecycle-cli-to-collection-mapping.md) | Raw CLI → module mapping + gap analysis for `management-lifecycle` |
 | [`customer-lifecycle-aws-module-mapping.md`](customer-lifecycle-aws-module-mapping.md) | Module/CLI mapping for `customer-lifecycle-aws` (+ `cloud.aws_ops` / `cloud.aws_troubleshooting` coverage) |
 | [`ansible-saas-sops-sre-cli-to-collection-mapping.md`](ansible-saas-sops-sre-cli-to-collection-mapping.md) | `ansible-saas-sops` (docs) + `ansible-saas-sre` mapping and summary tables |
-| [`aws-collections-new-modules.md`](aws-collections-new-modules.md) | **Consolidated:** new modules to add (primarily `amazon.aws`) |
-| [`aws-collections-module-modifications.md`](aws-collections-module-modifications.md) | **Consolidated:** modifications to existing `amazon.aws` / `community.aws` / `amazon.cloud` modules |
-| [`ansible-saas-repos-modifications.md`](ansible-saas-repos-modifications.md) | **Consolidated:** changes to the SaaS repos to use existing modules/playbooks (incl. validated content to adopt now) |
-| [`saas-validated-content-to-develop.md`](saas-validated-content-to-develop.md) | **New validated content** to build (`cloud.aws_ops` / `redhat.customer_lifecycle_aws` roles) from recurring SaaS use cases |
 | [`cloud-terraform-alignment-analysis.md`](cloud-terraform-alignment-analysis.md) | **Separate exercise:** `cloud.terraform` alignment for the Terraform (HCL) IaC repos + note on Go repos |
+
+### Modifications requested (`modifications/`)
+
+The actionable change requests — grouped in the [`modifications/`](modifications/) folder:
+
+| File | Scope |
+|---|---|
+| [`modifications/aws-collections-new-modules.md`](modifications/aws-collections-new-modules.md) | **Consolidated:** new modules to add (primarily `amazon.aws`) |
+| [`modifications/aws-collections-module-modifications.md`](modifications/aws-collections-module-modifications.md) | **Consolidated:** modifications to existing `amazon.aws` / `community.aws` / `amazon.cloud` modules |
+| [`modifications/ansible-saas-repos-modifications.md`](modifications/ansible-saas-repos-modifications.md) | **Consolidated:** changes to the SaaS repos to use existing modules/playbooks (incl. validated content to adopt now) |
+| [`modifications/saas-validated-content-to-develop.md`](modifications/saas-validated-content-to-develop.md) | **New validated content** to build (`cloud.aws_ops` / `redhat.customer_lifecycle_aws` roles) from recurring SaaS use cases |
 
 ## Repos analysed (and what each document covers)
 
